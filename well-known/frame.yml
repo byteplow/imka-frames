@@ -1,0 +1,3 @@
+name: well-known
+compose_templates: 
+  - docker-stack.yml.j2

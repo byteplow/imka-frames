@@ -1,0 +1,29 @@
+version: '3.9'
+services:
+  nginx: 
+    image: nginx:1.21.6
+    networks:
+      - ingress
+    configs:
+      - source: nginx_config
+        target: /etc/nginx/nginx.conf
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=ingress"
+        - "traefik.http.services.{{deployment_fullname}}-nginx.loadbalancer.server.port=80"
+        - "traefik.http.routers.{{deployment_fullname}}-nginx.tls=true"
+        - "traefik.http.routers.{{deployment_fullname}}-nginx.rule=Host(`{{domain}}`)"
+        - "traefik.http.routers.{{deployment_fullname}}-nginx.entryPoints=https"
+        - "traefik.http.routers.{{deployment_fullname}}-nginx.service={{deployment_fullname}}-nginx"
+        {% if ingress.certresolver %}
+        - "traefik.http.routers.{{deployment_fullname}}-nginx.tls.certresolver={{ingress.certresolver}}"
+        {% endif %}
+
+configs:
+  nginx_config: {{imka.config_from_template("./nginx.conf.j2")}}
+
+networks:
+  ingress:
+    name: ingress
+    external: true

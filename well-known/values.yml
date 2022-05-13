@@ -1,0 +1,7 @@
+domain: localhost
+matrix:
+  server: matrix.localhost:443
+mastodon:
+  server: mastodon.localhost
+ingress:
+  certresolver:
