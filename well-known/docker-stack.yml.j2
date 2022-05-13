@@ -1,12 +1,15 @@
-version: '3.9'
+version: '3.9-imka/v1'
 services:
   nginx: 
     image: nginx:1.21.6
     networks:
       - ingress
     configs:
-      - source: nginx_config
+      - source: nginx.conf.j2
         target: /etc/nginx/nginx.conf
+        type: imka
+        template:
+          enabled: true
     deploy:
       labels:
         - "traefik.enable=true"
@@ -19,9 +22,6 @@ services:
         {% if ingress.certresolver %}
         - "traefik.http.routers.{{deployment_fullname}}-nginx.tls.certresolver={{ingress.certresolver}}"
         {% endif %}
-
-configs:
-  nginx_config: {{imka.config_from_template("./nginx.conf.j2")}}
 
 networks:
   ingress:
