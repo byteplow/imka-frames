@@ -1,0 +1,7 @@
+acme:
+  email: acme@example.com
+  enabled: false
+
+log:
+  level: DEBUG
+  accesslog: true
