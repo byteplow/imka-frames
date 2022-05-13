@@ -1,0 +1,25 @@
+prometheus:
+  domain: prometheus.localhost
+  basic_auth: 'user:$$2y$$05$$.w8rpN1r2jX0sbmF8eVD1uViDayMvCUJuiC.M/PRlToFKtkZVnTgy' # user:foobar
+  scrape_interval: 5s
+  evaluation_interval: 5s
+  targets:
+    federationtester:
+  #    target: domain
+      scrape_interval: 240s
+
+grafana:
+  domain: grafana.localhost
+  config:
+    GF_SECURITY_ADMIN_PASSWORD: foobar
+    GF_SECURITY_ADMIN_USER: admin
+    GF_USERS_ALLOW_SIGN_UP: false
+    GF_SERVER_ROOT_URL: "https://{{grafana.domain}}"
+    GF_LOG_LEVEL: "{{grafana.log.level}}"
+  log:
+    level: INFO
+
+ingress:
+  certresolver:
+
+monitoring_network: monitoring

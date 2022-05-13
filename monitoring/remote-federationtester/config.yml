@@ -1,0 +1,4 @@
+metrics:
+- name: matrix_remote_federation_test_ok
+  path: "{ .FederationOK }"
+  help: test matrix with remote federation tester

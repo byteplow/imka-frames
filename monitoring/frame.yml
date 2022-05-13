@@ -1,0 +1,3 @@
+name: monitoring
+compose_templates: 
+  - docker-stack.yml.j2
